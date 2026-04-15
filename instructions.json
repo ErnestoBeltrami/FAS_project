@@ -1,0 +1,157 @@
+[
+  {
+    "opcode": "addi",
+    "category": "ALU",
+    "args": [
+      "sp",
+      "sp",
+      "-48"
+    ]
+  },
+  {
+    "opcode": "sd",
+    "category": "memory_write",
+    "args": [
+      "ra",
+      "40(sp)"
+    ]
+  },
+  {
+    "opcode": "sd",
+    "category": "memory_write",
+    "args": [
+      "s0",
+      "32(sp)"
+    ]
+  },
+  {
+    "opcode": "addi",
+    "category": "ALU",
+    "args": [
+      "s0",
+      "sp",
+      "48"
+    ]
+  },
+  {
+    "opcode": "sw",
+    "category": "memory_write",
+    "args": [
+      "a5",
+      "-20(s0)"
+    ]
+  },
+  {
+    "opcode": "sw",
+    "category": "memory_write",
+    "args": [
+      "a5",
+      "-24(s0)"
+    ]
+  },
+  {
+    "opcode": "lw",
+    "category": "memory_read",
+    "args": [
+      "a5",
+      "-20(s0)"
+    ]
+  },
+  {
+    "opcode": "mv",
+    "category": "ALU",
+    "args": [
+      "a4",
+      "a5"
+    ]
+  },
+  {
+    "opcode": "lw",
+    "category": "memory_read",
+    "args": [
+      "a5",
+      "-24(s0)"
+    ]
+  },
+  {
+    "opcode": "addw",
+    "category": "ALU",
+    "args": [
+      "a5",
+      "a4",
+      "a5"
+    ]
+  },
+  {
+    "opcode": "sw",
+    "category": "memory_write",
+    "args": [
+      "a5",
+      "-28(s0)"
+    ]
+  },
+  {
+    "opcode": "mv",
+    "category": "ALU",
+    "args": [
+      "a5",
+      "a0"
+    ]
+  },
+  {
+    "opcode": "sd",
+    "category": "memory_write",
+    "args": [
+      "a5",
+      "-40(s0)"
+    ]
+  },
+  {
+    "opcode": "ld",
+    "category": "memory_read",
+    "args": [
+      "a0",
+      "-40(s0)"
+    ]
+  },
+  {
+    "opcode": "mv",
+    "category": "ALU",
+    "args": [
+      "a0",
+      "a5"
+    ]
+  },
+  {
+    "opcode": "ld",
+    "category": "memory_read",
+    "args": [
+      "ra",
+      "40(sp)"
+    ]
+  },
+  {
+    "opcode": "ld",
+    "category": "memory_read",
+    "args": [
+      "s0",
+      "32(sp)"
+    ]
+  },
+  {
+    "opcode": "addi",
+    "category": "ALU",
+    "args": [
+      "sp",
+      "sp",
+      "48"
+    ]
+  },
+  {
+    "opcode": "jr",
+    "category": "function",
+    "args": [
+      "ra"
+    ]
+  }
+]
