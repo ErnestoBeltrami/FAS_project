@@ -7,7 +7,7 @@ def valid(line):
     else:
         return True
 
-def parse(line): 
+def parse(line,i): 
     inst = line.split()
     args = inst[1].split(",")
 
@@ -34,6 +34,7 @@ def parse(line):
         category = "unknown" 
     
     result = {
+            "line" : i,
             "opcode": opcode,
             "category": category,
             "args": args
@@ -43,21 +44,22 @@ def parse(line):
 
 
 
-def main():
+def get_instructions():
 
     instructions = []
-
-    with open("input.txt") as f:
+    i = 0
+    with open("../temp/input.txt") as f:
         for line in f:
             if valid(line) :
-                instruction = parse(line)
+                instruction = parse(line,i)
                 if not instruction["category"] == "unknown":
                     instructions.append(instruction)
+                    i = i+1
 
-    with open("instructions.json", "w") as f:
-        json.dump(instructions,f,indent=2)
+    return instructions
+
+def main():
+    print(get_instructions())
 
 if __name__ == "__main__":
     main()
-
-

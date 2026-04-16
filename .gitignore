@@ -1,6 +1,9 @@
+
+*.ipynb
 venv/
 __pycache__/
 *.pyc
+*.ipynb
 
 temp/
 *.s
