@@ -1,4 +1,3 @@
-from analyzer import build_df
 import matplotlib.pyplot as plt
 
 def instruction_count(df): 

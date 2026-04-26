@@ -1,5 +1,4 @@
 import pandas as pd 
-from parser import get_instructions
 
 def sp_tracker(data):
     sp = 0
@@ -12,51 +11,78 @@ def sp_tracker(data):
 
     return ret
 
-def extract_rd_rs():
+def extract_rd_rs(data):
     ret = []
 
-    data = get_instructions()
-    
-    for i in data: 
-        if i["category"] == "ALU":
-            rs = [i["args"][1]]
-            
-            if not (i["opcode"].endswith("i") or i["opcode"] == "mv"):
-                rs.append(i["args"][2])
+    def get_reg_from_mem(arg):
+        # estrae il registro da "offset(reg)" oppure ritorna arg
+        if "(" in arg:
+            return arg.split("(")[1].replace(")", "")
+        return arg
+
+    for ins in data:
+        args = ins["args"]
+
+        # sicurezza base (evita index error)
+        if len(args) == 0:
+            continue
+
+        if ins["category"] == "ALU":
+            # rd sempre primo argomento
+            rd = args[0]
+
+            rs = []
+            if len(args) > 1:
+                rs.append(args[1])
+
+            # se NON è immediata (tipo addi) e NON è mv
+            if len(args) > 2 and not (ins["opcode"].endswith("i") or ins["opcode"] == "mv"):
+                rs.append(args[2])
 
             ret.append({
-                "rd" : i["args"][0],
-                "rs" : rs
+                "rd": rd,
+                "rs": rs
+            })
+
+        elif ins["category"] == "memory_read":
+            # lw rd, offset(rs)
+            if len(args) > 1:
+                rs = get_reg_from_mem(args[1])
+
+                ret.append({
+                    "rd": args[0],
+                    "rs": [rs]
                 })
-        elif i["category"] == "memory_read": 
-            offset,rs = i["args"][1].split("(")
-            rs = rs.replace(")", "")
-            ret.append({
-                "rd" : i["args"][0],
-                "rs" : [rs]
+
+        elif ins["category"] == "memory_write":
+            # sw rs, offset(rd)
+            if len(args) > 1:
+                rd = get_reg_from_mem(args[1])
+
+                ret.append({
+                    "rd": rd,
+                    "rs": [args[0]]
                 })
-        elif i["category"] == "memory_write":
-            offset,rd = i["args"][1].split("(")
-            rd = rd.replace(")", "")
-            ret.append({
-                "rd" : rd,
-                "rs" : [i["args"][0]]
-                })
+
+    # ---- pandas part ----
+
+    if not ret:
+        return pd.DataFrame()
 
     registers = pd.DataFrame(ret)
-    rd = registers["rd"].value_counts()
-    rs = registers.explode("rs")["rs"].value_counts()
-    
-    union = sorted(set(rd.index) | set(rs.index))
-    data = pd.DataFrame({
-        "rd" : rd,
-        "rs" : rs
-        }).fillna(0).loc[union]
 
-    return data
-            
-def build_df():
-    data = get_instructions()
+    rd_counts = registers["rd"].value_counts()
+    rs_counts = registers.explode("rs")["rs"].value_counts()
+
+    union = sorted(set(rd_counts.index) | set(rs_counts.index))
+
+    result = pd.DataFrame({
+        "rd": rd_counts,
+        "rs": rs_counts
+    }).fillna(0).loc[union]
+
+    return result
+def build_df(data):
     timeline_sp = sp_tracker(data)
     return (pd.DataFrame(data),timeline_sp)
 

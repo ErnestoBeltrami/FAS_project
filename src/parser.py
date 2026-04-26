@@ -9,30 +9,37 @@ def valid(line):
 
 def parse(line,i): 
     inst = line.split()
-    args = inst[1].split(",")
-
-    opcode = inst[0]
     
-    category = ""
+    if len(inst) >= 2:
+        args = inst[1].split(",")
 
-    if opcode in ["add","sub","or","and","xor","mv","addi","addw"]:
-        category = "ALU"
+        opcode = inst[0]
+        
+        category = ""
 
-    elif opcode in ["lw","ld"]:
-        category = "memory_read"
+        if opcode in ["add","sub","or","and","xor","mv","addi","ori","andi","xori","sll","srl","sra","slli","srli","srai"]:
+            category = "ALU"
 
-    elif opcode in ["sw","sd"]:
-        category = "memory_write"
+        elif opcode in ["lw","ld"]:
+            category = "memory_read"
 
-    elif opcode.startswith(("j","call","ret","jr")):
-        category = "function"
+        elif opcode in ["sw","sd"]:
+            category = "memory_write"
 
-    elif opcode.startswith("b"):
-        category = "branch"
+        elif opcode.startswith(("j","call","ret","jr")):
+            category = "function"
 
+        elif opcode.startswith("b"):
+            category = "branch"
+
+        else:
+            category = "unknown" 
+    
     else:
-        category = "unknown" 
-    
+        opcode = inst[0]
+        category = "unknown"
+        args = []
+
     result = {
             "line" : i,
             "opcode": opcode,
@@ -44,11 +51,11 @@ def parse(line,i):
 
 
 
-def get_instructions():
+def get_instructions(filename):
 
     instructions = []
     i = 0
-    with open("../temp/input.txt") as f:
+    with open(filename) as f:
         for line in f:
             if valid(line) :
                 instruction = parse(line,i)
@@ -58,8 +65,4 @@ def get_instructions():
 
     return instructions
 
-def main():
-    print(get_instructions())
 
-if __name__ == "__main__":
-    main()
