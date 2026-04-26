@@ -1,10 +1,6 @@
-
-*.ipynb
-venv/
-__pycache__/
-*.pyc
-*.ipynb
-
 temp/
 *.s
-*.json
+*.c 
+*.txt
+temp/
+__pycache__/

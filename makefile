@@ -30,4 +30,4 @@ clean:
 	rm -f temp/*.c
 
 notebook: 
-	cd output && jupyter notebook --allow-root --ip=0.0.0.0 --port=8888 --no-browser
+	cd output && jupyter notebook --allow-root --ip=0.0.0.0 --port=8888 
