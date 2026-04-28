@@ -1,3 +1,11 @@
+.ipynb.checkpoints/
+*.ipynb.checkpoints
+
+output/
+.ipynb.checkpoints/
+*.ipynb.checkpoints
+
+
 temp/
 *.s
 *.c 
