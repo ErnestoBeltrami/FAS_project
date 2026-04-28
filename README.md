@@ -24,16 +24,24 @@ While primarily designed for educational purposes, this kind of analysis reflect
 *The upper graph is always related to the non-optimized output while the bottom one has -O2 optimization*
 
 - **Instructions by usage** 
-![Instruction Distribution](instruction_distribution.png)
+
+
+![Instruction Distribution](images/instruction_distribution.png)
 
 - **Stack-Pointer evolution**
-![Stack Pointer](stack_pointer.png)
 
-- **Instruction Category Distribution
-![Categories](categories.png)
+
+![Stack Pointer](images/stack_pointer.png)
+
+- **Instruction Category Distribution**
+
+  
+![Categories](images/categories.png)
 
 - **Destination/Source frequency of registers** *(how many times each register was a source or destination in instructions)*
-![Registers](registers.png)
+
+
+![Registers](images/registers.png)
 
 
 ### Technologies Used
