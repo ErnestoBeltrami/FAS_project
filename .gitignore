@@ -5,6 +5,7 @@ output/
 .ipynb.checkpoints/
 *.ipynb.checkpoints
 
+.obsidian/
 
 temp/
 *.s
